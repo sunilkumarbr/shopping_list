@@ -15,7 +15,6 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname + '/public'));
 
 /************************connection to mongodb server**************************/
-
 var db,col;
 
 mongo.connect("mongodb://shoppinglist:sunil@ds056698.mongolab.com:56698/shoppinglist", function(error, r) {
@@ -28,7 +27,6 @@ mongo.connect("mongodb://shoppinglist:sunil@ds056698.mongolab.com:56698/shopping
         col = db.collection('shopping_list');
     }
 })
-
 /************************routing**************************/
 app.get('/', function(req, res) {
     fromcol = col.find().sort({
@@ -47,7 +45,6 @@ app.get('/', function(req, res) {
 });
 
 /************************insertion**************************/
-
 app.post('/', function(req, res) {
     var item = req.body.item;
     quantity = req.body.quantity;
@@ -254,7 +251,7 @@ app.post('/update', function(req, res) {
 });
 
 /************************assigning port**************************/
-
-app.listen(5350, function() {
-    console.log('running at 5350');
+var port=Number(process.env.PORT||5350)
+app.listen(port, function() {
+    console.log('running at '+port);
 });
